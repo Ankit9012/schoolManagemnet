@@ -28,21 +28,73 @@ const StudentSchema = new mongoose.Schema(
                         .toUpperCase()
                 )
             },
-            role: {},
-            isWitdrawn: {},
-            classLevels: [{}],
-            currentClassLeve: {},
-            academicYear: {},
-            dateAdmitted: {},
-            examResults: [{}],
-            program: {},
-            isPromotedToLevel200: {},
-            isPromotedToLevel300: {},
-            isPromotedToLevel400: {},
-            isGraduated: {},
-            isSuspended: {},
-            perfectName: {},
-            yearGraduated: {}
+            role: {
+                type: String,
+                default: 'student'
+            },
+            isWitdrawn: {
+                type: Boolean,
+                default: false,
+
+            },
+            classLevels: [{
+                type: mongoose.Types.ObjectId,
+                ref: 'ClassLevel',
+                required: trusted,
+
+            }],
+            currentClassLevel: {
+                type: String,
+                default: () => {
+                    return this.classLevels[
+                        this.classLevels.length - 1
+                    ]
+                }
+            },
+            academicYear: {
+                type: mongoose.Types.ObjectId,
+                ref: 'AcademicYear',
+                required: true
+            },
+            dateAdmitted: {
+                type: Date,
+                defalut: Date.now
+            },
+            examResults: [{
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'ExamResult'
+            }],
+            program: {
+                type: mongoose.Types.ObjectId,
+                ref: 'Program',
+                required: true
+            },
+            isPromotedToLevel200: {
+                type: Boolean,
+                default: false
+            },
+            isPromotedToLevel300: {
+                type: Boolean,
+                default: false
+            },
+            isPromotedToLevel400: {
+                type: Boolean,
+                default: false
+            },
+            isGraduated: {
+                type: Boolean,
+                default: false
+            },
+            isSuspended: {
+                type: Boolean,
+                default: false
+            },
+            perfectName: {
+                type:String,
+            },
+            yearGraduated: {
+                type:String,
+            }
         }
     }
 );
